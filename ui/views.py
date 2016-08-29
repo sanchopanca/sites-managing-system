@@ -1,11 +1,14 @@
 from django.shortcuts import render
 
+from .models import Site
+
 
 def index(request):
-    return render(request, 'ui/index.html')
+    sites = Site.objects.all()
+    return render(request, 'ui/index.html', {'sites': sites})
 
 
-def site_entry(request):
+def site_entry(request, site_id):
     return render(request, 'ui/site-entry.html')
 
 
