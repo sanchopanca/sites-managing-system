@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from .models import Site
 
@@ -9,7 +9,8 @@ def index(request):
 
 
 def site_entry(request, site_id):
-    return render(request, 'ui/site-entry.html')
+    site = get_object_or_404(Site, pk=site_id)
+    return render(request, 'ui/site-entry.html', {'site': site})
 
 
 def summary(request):

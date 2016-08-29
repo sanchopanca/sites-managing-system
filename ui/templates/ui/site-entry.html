@@ -1,10 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+  <title>Site Management System</title>
+  <meta name="viewport" content="width=520, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 </head>
 <body>
+
+<!-- Static navbar -->
+<nav class="navbar navbar-default">
+  <div id="navbar" class="navbar-collapse collapse">
+    <ul class="nav navbar-nav">
+      <li class="active" role="presentation" >
+        <a href="{% url 'sites' %}">Sites</a>
+      </li>
+      <li role="presentation" >
+        <a href="{% url 'summary' %}">Summary</a>
+      </li>
+    </ul>
+  </div><!--/.nav-collapse -->
+</nav>
+
+
+
+<div class="container">
+  <h1>Site Details - {{ site.name }}</h1>
+
+  <table class="table">
+    <thead>
+    <tr><td><strong>Date</strong></td>
+      <td><strong>A Value</strong></td><td><strong>B Value</strong></td></tr>
+    </thead>
+    {% for entry in site.statistics_entries.all %}
+    <tr>
+      <td>{{ entry.date|date:'N j, Y' }}</td>
+      <td>{{ entry.a|floatformat:2 }}</td>
+      <td>{{ entry.b|floatformat:2 }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+
 
 </body>
 </html>

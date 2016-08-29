@@ -9,7 +9,8 @@ class Site(models.Model):
 
 
 class Statistics(models.Model):
-    site = models.ForeignKey(Site, on_delete=models.CASCADE)
+    site = models.ForeignKey(Site, related_name='statistics_entries',
+                             on_delete=models.CASCADE)
     date = models.DateField()
     a = models.FloatField()
     b = models.FloatField()
