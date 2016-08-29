@@ -1,3 +1,4 @@
+from django.db.models import Avg
 from django.shortcuts import render, get_object_or_404
 
 from .models import Site
@@ -14,8 +15,15 @@ def site_entry(request, site_id):
 
 
 def summary(request):
-    return render(request, 'ui/summary.html')
+    sites = Site.objects.all()
+    for site in sites:
+        entries = site.statistics_entries.all()
+        site.aggregation_a = sum(entry.a for entry in entries)
+        site.aggregation_b = sum(entry.b for entry in entries)
+    return render(request, 'ui/summary.html', {'sites': sites})
 
 
 def summary_average(request):
-    return render(request, 'ui/summary.html')
+    sites = Site.objects.annotate(aggregation_a=Avg('statistics_entries__a'),
+                                  aggregation_b=Avg('statistics_entries__b'))
+    return render(request, 'ui/summary.html', {'sites': sites})
