@@ -20,10 +20,10 @@ def summary(request):
         entries = site.statistics_entries.all()
         site.aggregation_a = sum(entry.a for entry in entries)
         site.aggregation_b = sum(entry.b for entry in entries)
-    return render(request, 'ui/summary.html', {'sites': sites})
+    return render(request, 'ui/summary.html', {'sites': sites, 'action': 'sum'})
 
 
 def summary_average(request):
     sites = Site.objects.annotate(aggregation_a=Avg('statistics_entries__a'),
                                   aggregation_b=Avg('statistics_entries__b'))
-    return render(request, 'ui/summary.html', {'sites': sites})
+    return render(request, 'ui/summary.html', {'sites': sites, 'action': 'average'})
